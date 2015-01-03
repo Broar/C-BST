@@ -2,7 +2,10 @@
 #define BST_H
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include <assert.h>
 
+#define MIN_INT INT32_MIN    // sentinel value for a null BSTNode
 
 
 /* BST: */
@@ -24,23 +27,39 @@ typedef struct _BSTNode BSTNode;
 
 
 /* Converts pointer to a BSTNode NODE into a pointer to the
-structure that DNode is embedded inside.
+structure that BSTNode is embedded inside.
 Supply the name of the outer structure STRUCT and the
-member name MEMBER of the DNode.
+member name MEMBER of the BSTNode.
 */
 #define BST_Entry(NODE, STRUCT, MEMBER)	\
   ((STRUCT *) ((uint8_t *) (NODE) - offsetof (STRUCT, MEMBER))) \
 
 
-/* Initializes a new empty BST empty
+/* Initializes a new empty BST:
+pre: bst points to an initialized BST
+post: bst contains a root node pointer == NULL
 */
 void BST_Init(BST* bst);
 
 
-/* Initialize a new BSTNode struct 
+/* Initialize a new BSTNode:
+pre: node points to an initialized BSTNode
+post: node's left member is NULL
+	node's right member is NULL
+	node's key member is equal to MIN_INT
 */
 void BSTNode_Init(BSTNode* node);
 
+/* Returns a pointer to the node's left child node if it exists.
+otherwise returns NULL
+*/
+BSTNode* BSTNode_Left(BSTNode* node);
+
+
+/* Returns a pointer to the node's right child node if it exists.
+otherwise returns NULL
+*/
+BSTNode* BSTNode_Right(BSTNode* node);
 
 /* Returns a pointer to root node of bst.
 If bst is empty, returns NULL
@@ -51,8 +70,10 @@ BSTNode* BST_Root(BST* bst);
 /* Returns true if bst is empty,
 otherwise returns false 
 */
-bool BST_Is_Empty(BST* bst);
+bool BST_Is_Empty(BST* bst) {
 
+	return bst->root == NULL;
+}
 
 /* Inserts node into bst;
 Returns true of the node was properly inserted,
@@ -100,3 +121,5 @@ and executes the function paramater func at each node
 */
 void BST_Post_Order(BST *bst, void (func*)(BSTNode* node) );
 
+
+#endif
