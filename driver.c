@@ -42,14 +42,16 @@ int main () {
 */
 static void test_init() {
 
+	/* Initialize the BST struct bst*/
 	printf("Testing initialization of BST structure.\n");
 	printf("Initializing BST...\n");
 	BST_Init(&bst);
 
+	/* Test that the bst is empty */
 	printf("BST is Empty: ");
 	BST_Is_Empty(&bst) ? printf("OK\n") : printf("FAIL\n");
 
+	/* Test that the root node of bst is NULL */
 	printf("BST root node is NULL: ");
 	BST_Root(&bst) == NULL ? printf("OK\n") : printf("FAIL\n");
-
 }
