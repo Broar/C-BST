@@ -46,7 +46,7 @@ void BST_Init(BST* const bst);
 PRE: bst points to an initialized BSTNode struct
 POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* const bstNode);
+void BSTNode_Init(BSTNode* const node);
 
 /* Returns a pointer to the node's left child node if it exists.
 otherwise returns NULL
@@ -128,7 +128,7 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_Pre_Order(const BST const *bst, void (func*)(const BSTNode* const node));
+void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node) );
 
 
 /* Performs a In-Order traversal of bst 
@@ -136,7 +136,7 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_In_Order(const BST* const bst, void (func*)(const BSTNode* const node));
+void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node) );
 
 
 /* Performs a Post-Order traversal of bst 
@@ -144,7 +144,7 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_Post_Order(const BST const *bst, void (func*)(const BSTNode* const node));
+void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node) );
 
 
 #endif

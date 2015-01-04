@@ -1,5 +1,6 @@
 #include "BST.h"
 #include "StringDT.h"
+#include <stdio.h>
 
 /******************************* Commands *******************************/
 
@@ -17,10 +18,38 @@ static void test_init();
 static BST bst;
 
 /* Strings */
-char* zero = "Zero";
-char* one = "One";
-char* two = "Two";
-char* three = "Three";
-char* four = "Four";
-char* five = "Five";
-char* six = "Six";
+char* zero 	= 	"Zero";
+char* one 	= 	"One";
+char* two 	= 	"Two";
+char* three = 	"Three";
+char* four 	= 	"Four";
+char* five 	= 	"Five";
+char* six 	= 	"Six";
+
+
+/*
+*/
+int main () {
+
+	/* testing initialization methods */
+	test_init();
+
+	return(0);
+}
+
+
+/*
+*/
+static void test_init() {
+
+	printf("Testing initialization of BST structure.\n");
+	printf("Initializing BST...\n");
+	BST_Init(&bst);
+
+	printf("BST is Empty: ");
+	BST_Is_Empty(&bst) ? printf("OK\n") : printf("FAIL\n");
+
+	printf("BST root node is NULL: ");
+	BST_Root(&bst) == NULL ? printf("OK\n") : printf("FAIL\n");
+
+}

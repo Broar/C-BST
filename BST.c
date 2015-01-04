@@ -18,7 +18,7 @@ void BST_Init(BST* const bst) {
 PRE: bst points to an initialized BSTNode struct
 POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* const bstNode) {
+void BSTNode_Init(BSTNode* const node) {
 
 	assert(node != NULL);
 
@@ -118,7 +118,7 @@ if it exists in bst, otherwise returns null
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, int const key));
+BSTNode* BST_Find(const BST* const bst, int const key);
 
 
 /* Returns the number of nodes contained in bst
@@ -132,6 +132,8 @@ int BST_Size(const BST* const bst) {
 	//TODO
 	/* run a traversal, sending in a function that counts up the nodes
 	as they are visited */
+
+	return -1;
 }
 
 
@@ -140,7 +142,7 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_Pre_Order(const BST const *bst, void (func*)(const BSTNode* const node));
+void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node));
 
 
 /* Performs a In-Order traversal of bst 
@@ -148,7 +150,7 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_In_Order(const BST* const bst, void (func*)(const BSTNode* const node));
+void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node));
 
 
 /* Performs a Post-Order traversal of bst 
@@ -156,4 +158,4 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_Post_Order(const BST const *bst, void (func*)(const BSTNode* const node));
+void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node));
