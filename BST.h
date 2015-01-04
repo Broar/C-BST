@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <assert.h>
 
+
 #define MIN_INT INT32_MIN    /* sentinel value for a null BSTNode */
 
 
@@ -48,12 +49,14 @@ POST: bstNode is an empty node with no child nodes
 */
 void BSTNode_Init(BSTNode* const node);
 
+
 /* Returns a pointer to the node's left child node if it exists.
 otherwise returns NULL
 PRE: node points to a properly initialized BSTNode struct
 POST: N/A
 */
 BSTNode* BSTNode_Left(const BSTNode* const node);
+
 
 /* Returns a pointer to the node's right child node if it exists.
 otherwise returns NULL
@@ -113,7 +116,6 @@ PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
 BSTNode* BST_Find(const BST* const bst, int const key);
-
 
 
 /* Returns the number of nodes contained in bst

@@ -2,8 +2,8 @@
 
 
 /* static helper method declarations */
-static bool insert(BSTNode* root, BSTNode* node);
-static BSTNode* find(BSTNode* node, int const key);
+static bool Insert(BSTNode* root, BSTNode* node);
+static BSTNode* Find(BSTNode* node, int const key);
 
 
 /* Initializes a new empty BST empty
@@ -96,11 +96,11 @@ bool BST_Insert(BST* const bst, BSTNode* const node) {
 	assert(bst != NULL);
 	assert(node != NULL);
 
-	return insert(BST_Root(bst), node);
+	return Insert(BST_Root(bst), node);
 }
 
 /* Recursive insert function*/
-static bool insert(BSTNode* root, BSTNode* node) {
+static bool Insert(BSTNode* root, BSTNode* node) {
 	
 	/* insert here */
 	if (root == NULL) {
@@ -118,7 +118,7 @@ static bool insert(BSTNode* root, BSTNode* node) {
 			return true;
 		}
 		else {
-			return insert(left, node);
+			return Insert(left, node);
 		}
 	}
 
@@ -132,7 +132,7 @@ static bool insert(BSTNode* root, BSTNode* node) {
 			return true;
 		}
 		else {
-			return insert(right, node);
+			return Insert(right, node);
 		}
 	}
 
@@ -151,7 +151,11 @@ and node points to a properly initialized BSTNode struct
 POST: If a node with the the key value of node already exists in bst, nothing changes.
 Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Remove(BST* const bst, BSTNode* const node);
+bool BST_Remove(BST* const bst, BSTNode* const node) {
+
+	//TODO
+	return false;
+}
 
 
 
@@ -176,14 +180,14 @@ BSTNode* BST_Find(const BST* const bst, int const key) {
 
 	assert(bst != NULL);
 
-	return find(bst->root, key);
+	return Find(bst->root, key);
 }
 
 
 /* Recursive find function for searching a BST struct for a node with 
 a key member equal to 'key'
 */
-static BSTNode* find(BSTNode* node, int const key) {
+static BSTNode* Find(BSTNode* node, int const key) {
 
 	/* the key is not in the BST */
 	if (node == NULL) {
@@ -192,12 +196,12 @@ static BSTNode* find(BSTNode* node, int const key) {
 
 	/* the key is to the left */
 	else if (key < node->key) {
-		return find(BSTNode_Left(node), key);
+		return Find(BSTNode_Left(node), key);
 	}
 
 	/* the key is to the right */
 	else if (key > node->key) {
-		return find(BSTNode_Right(node), key);
+		return Find(BSTNode_Right(node), key);
 	}
 
 	/* the key at this node */
@@ -230,7 +234,12 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node));
+void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
+
+	//TODO
+
+	return;
+}
 
 
 /* Performs a In-Order traversal of bst 
@@ -238,7 +247,12 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node));
+void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
+
+	//TODO
+	
+	return;
+}
 
 
 /* Performs a Post-Order traversal of bst 
@@ -246,4 +260,9 @@ and executes the function paramater func at each node
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node));
+void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
+
+	//TODO
+	
+	return;
+}
