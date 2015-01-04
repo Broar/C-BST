@@ -1,6 +1,10 @@
 #include "BST.h"
 
 
+/* static helper method declarations */
+static bool insert(BSTNode* root, BSTNode* node);
+static BSTNode* find(BSTNode* node, int const key);
+
 
 /* Initializes a new empty BST empty
 PRE: bst points to an initialized BST struct
@@ -87,7 +91,57 @@ and node points to a properly initialized BSTNode struct
 POST: If a node with the the key value of node already exists in bst, nothing changes.
 Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Insert(BST* const bst, BSTNode* const node);
+bool BST_Insert(BST* const bst, BSTNode* const node) {
+
+	assert(bst != NULL);
+	assert(node != NULL);
+
+	return insert(BST_Root(bst), node);
+}
+
+/* Recursive insert function*/
+static bool insert(BSTNode* root, BSTNode* node) {
+	
+	/* insert here */
+	if (root == NULL) {
+		root = node;
+		return true;
+	}
+
+	/* insert in the left sub-tree */
+	else if (node->key < root->key) {
+
+		BSTNode* left = BSTNode_Left(root);
+
+		if (left == NULL) {
+			root->left = node;
+			return true;
+		}
+		else {
+			return insert(left, node);
+		}
+	}
+
+	/* insert in the right sub-tree */
+	else if (node->key > root->key) {
+		
+		BSTNode* right = BSTNode_Right(root);
+
+		if (right == NULL) {
+			root->right = node;
+			return true;
+		}
+		else {
+			return insert(right, node);
+		}
+	}
+
+	else {
+
+		/* duplicate entry */
+		return false;
+	}
+}
 
 
 /* Removes node from bst if it exists and returns true,
@@ -114,11 +168,45 @@ void BST_Clear(BST* const bst) {
 
 
 /* Returns a pointer to the BSTNode in bst that has a Key member equal to key
-if it exists in bst, otherwise returns null
+if it exists in bst, otherwise returns NULL
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, int const key);
+BSTNode* BST_Find(const BST* const bst, int const key) {
+
+	assert(bst != NULL);
+
+	return find(bst->root, key);
+}
+
+
+/* Recursive find function for searching a BST struct for a node with 
+a key member equal to 'key'
+*/
+static BSTNode* find(BSTNode* node, int const key) {
+
+	/* the key is not in the BST */
+	if (node == NULL) {
+		return NULL;
+	}
+
+	/* the key is to the left */
+	else if (key < node->key) {
+		return find(BSTNode_Left(node), key);
+	}
+
+	/* the key is to the right */
+	else if (key > node->key) {
+		return find(BSTNode_Right(node), key);
+	}
+
+	/* the key at this node */
+	else {
+
+		return node;
+	}
+} 
+
 
 
 /* Returns the number of nodes contained in bst

@@ -100,7 +100,6 @@ Otherwise, node is inserted into the BST struct pointed to by bst
 bool BST_Remove(BST* const bst, BSTNode* const node);
 
 
-
 /* Clears all nodes from bst
 PRE: bst points to a properly initialized BST struct
 POST: bst points to an empty BST struct whose root BSTNode is NULL
@@ -114,6 +113,7 @@ PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
 BSTNode* BST_Find(const BST* const bst, int const key);
+
 
 
 /* Returns the number of nodes contained in bst
