@@ -96,7 +96,19 @@ bool BST_Insert(BST* const bst, BSTNode* const node) {
 	assert(bst != NULL);
 	assert(node != NULL);
 
-	return Insert(BST_Root(bst), node);
+	BSTNode* root  = BST_Root(bst);
+
+	if (root == NULL) {
+
+		/* insert on an empty BST*/
+		bst->root = node;
+		return true;
+	}
+	else {
+
+		/* recursively insert the node in BST*/
+		return Insert(BST_Root(bst), node);
+	}
 }
 
 /* Recursive insert function*/
