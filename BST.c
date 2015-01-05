@@ -3,7 +3,7 @@
 
 /* static helper method declarations */
 static bool Insert(BSTNode* root, BSTNode* node);
-static BSTNode* Find(BSTNode* node, int const key);
+static BSTNode* Find(BSTNode* node, const int key);
 
 
 /* Initializes a new empty BST empty
@@ -22,11 +22,11 @@ void BST_Init(BST* const bst) {
 PRE: bst points to an initialized BSTNode struct
 POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* const node) {
+void BSTNode_Init(BSTNode* const node, const int* const key) {
 
 	assert(node != NULL);
 
-	node->key = MIN_INT;
+	node->key = *key;
 	node->left = NULL;
 	node->right = NULL;
 }
@@ -176,7 +176,7 @@ if it exists in bst, otherwise returns NULL
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, int const key) {
+BSTNode* BST_Find(const BST* const bst, int key) {
 
 	assert(bst != NULL);
 
@@ -187,7 +187,7 @@ BSTNode* BST_Find(const BST* const bst, int const key) {
 /* Recursive find function for searching a BST struct for a node with 
 a key member equal to 'key'
 */
-static BSTNode* Find(BSTNode* node, int const key) {
+static BSTNode* Find(BSTNode* node, int key) {
 
 	/* the key is not in the BST */
 	if (node == NULL) {

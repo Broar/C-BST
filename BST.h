@@ -20,7 +20,7 @@ typedef struct _BST BST;
 /* BSTNode: */
 struct _BSTNode {
 
-	int key;					/* key for this node */
+	int  	key;				/* key for this node */
 	struct _BSTNode* left;		/* left child node */
 	struct _BSTNode* right;		/* right child node */
 };
@@ -47,7 +47,7 @@ void BST_Init(BST* const bst);
 PRE: bst points to an initialized BSTNode struct
 POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* const node);
+void BSTNode_Init(BSTNode* const node, const int* const key);
 
 
 /* Returns a pointer to the node's left child node if it exists.
@@ -115,7 +115,7 @@ if it exists in bst, otherwise returns null
 PRE: bst points to a properly initialized BST struct
 POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, int const key);
+BSTNode* BST_Find(const BST* const bst, int key);
 
 
 /* Returns the number of nodes contained in bst
