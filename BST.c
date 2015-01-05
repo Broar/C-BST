@@ -6,9 +6,12 @@ static bool Insert(BSTNode* root, BSTNode* node);
 static BSTNode* Find(BSTNode* node, const int key);
 
 
-/* Initializes a new empty BST empty
-PRE: bst points to an initialized BST struct
-POST: BST bst is an empty with a NULL root node
+/* 
+ * Initializes a new empty BST empty
+ * 
+ * PRE: bst points to an initialized BST struct
+ * 
+ * POST: BST bst is an empty with a NULL root node
 */
 void BST_Init(BST* const bst) {
 
@@ -18,9 +21,12 @@ void BST_Init(BST* const bst) {
 }
 
 
-/* Initializes a new empty BSTNode:
-PRE: bst points to an initialized BSTNode struct
-POST: bstNode is an empty node with no child nodes
+/* 
+ * Initializes a new empty BSTNode:
+ * 
+ * PRE: bst points to an initialized BSTNode struct
+ *  
+ * POST: bstNode is an empty node with no child nodes
 */
 void BSTNode_Init(BSTNode* const node, const int* const key) {
 
@@ -31,10 +37,13 @@ void BSTNode_Init(BSTNode* const node, const int* const key) {
 	node->right = NULL;
 }
 
-/* Returns a pointer to the node's left child node if it exists.
-otherwise returns NULL
-PRE: node points to a properly initialized BSTNode struct
-POST: N/A
+/* 
+ * Returns a pointer to the node's left child node if it exists.
+ * otherwise returns NULL
+ * 
+ * PRE: node points to a properly initialized BSTNode struct
+ * 
+ * POST: N/A
 */
 BSTNode* BSTNode_Left(const BSTNode* const node) {
 
@@ -44,10 +53,13 @@ BSTNode* BSTNode_Left(const BSTNode* const node) {
 }
 
 
-/* Returns a pointer to the node's right child node if it exists.
-otherwise returns NULL
-PRE: node points to a properly initialized BSTNode struct
-POST: N/A
+/* 
+ * Returns a pointer to the node's right child node if it exists.
+ * otherwise returns NULL
+ * 
+ * PRE: node points to a properly initialized BSTNode struct
+ * 
+ * POST: N/A
 */
 BSTNode* BSTNode_Right(const BSTNode* const node) {
 
@@ -57,10 +69,13 @@ BSTNode* BSTNode_Right(const BSTNode* const node) {
 }
 
 
-/* Returns a pointer to root node of bst.
-If bst is empty, returns NULL
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/* 
+ * Returns a pointer to root node of bst.
+ * If bst is empty, returns NULL
+ *  
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 BSTNode* BST_Root(const BST* const bst) {
 
@@ -70,10 +85,13 @@ BSTNode* BST_Root(const BST* const bst) {
 }
 
 
-/* Returns true if bst is empty,
-otherwise returns false.
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/* 
+ * Returns true if bst is empty,
+ * otherwise returns false.
+ * 
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 bool BST_Is_Empty(const BST* const bst) {
 
@@ -83,13 +101,16 @@ bool BST_Is_Empty(const BST* const bst) {
 }
 
 
-/* Inserts node into bst;
-Returns true of the node was properly inserted,
-Otherwise returns false.
-PRE: bst points to a properly initialized BST struct 
-and node points to a properly initialized BSTNode struct
-POST: If a node with the the key value of node already exists in bst, nothing changes.
-Otherwise, node is inserted into the BST struct pointed to by bst
+/* 
+ * Inserts node into bst;
+ * Returns true of the node was properly inserted,
+ * Otherwise returns false.
+ * 
+ * PRE: bst points to a properly initialized BST struct 
+ * and node points to a properly initialized BSTNode struct
+ * 
+ * POST: If a node with the the key value of node already exists in bst, nothing changes.
+ * Otherwise, node is inserted into the BST struct pointed to by bst
 */
 bool BST_Insert(BST* const bst, BSTNode* const node) {
 
@@ -106,7 +127,7 @@ bool BST_Insert(BST* const bst, BSTNode* const node) {
 	}
 	else {
 
-		/* recursively insert the node in BST*/
+		/* recursively insert the node in */
 		return Insert(BST_Root(bst), node);
 	}
 }
@@ -156,12 +177,15 @@ static bool Insert(BSTNode* root, BSTNode* node) {
 }
 
 
-/* Removes node from bst if it exists and returns true,
-otherwise, returns false
-PRE: bst points to a properly initialized BST struct 
-and node points to a properly initialized BSTNode struct
-POST: If a node with the the key value of node already exists in bst, nothing changes.
-Otherwise, node is inserted into the BST struct pointed to by bst
+/* 
+ * Removes node from bst if it exists and returns true,
+ * otherwise, returns false
+ * 
+ * PRE: bst points to a properly initialized BST struct 
+ * and node points to a properly initialized BSTNode struct
+ * 
+ * POST: If a node with the the key value of node already exists in bst, nothing changes.
+ * Otherwise, node is inserted into the BST struct pointed to by bst
 */
 bool BST_Remove(BST* const bst, BSTNode* const node) {
 
@@ -171,9 +195,12 @@ bool BST_Remove(BST* const bst, BSTNode* const node) {
 
 
 
-/* Clears all nodes from bst
-PRE: bst points to a properly initialized BST struct
-POST: bst points to an empty BST struct whose root BSTNode is NULL
+/* 
+ * Clears all nodes from bst
+ * 
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: bst points to an empty BST struct whose root BSTNode is NULL
 */
 void BST_Clear(BST* const bst) {
 
@@ -183,10 +210,13 @@ void BST_Clear(BST* const bst) {
 }
 
 
-/* Returns a pointer to the BSTNode in bst that has a Key member equal to key
-if it exists in bst, otherwise returns NULL
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/* 
+ * Returns a pointer to the BSTNode in bst that has a Key member equal to key
+ * if it exists in bst, otherwise returns NULL
+ * 
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 BSTNode* BST_Find(const BST* const bst, int key) {
 
@@ -196,8 +226,9 @@ BSTNode* BST_Find(const BST* const bst, int key) {
 }
 
 
-/* Recursive find function for searching a BST struct for a node with 
-a key member equal to 'key'
+/* 
+ * Recursive find function for searching a BST struct for a node with 
+ * a key member equal to 'key'
 */
 static BSTNode* Find(BSTNode* node, int key) {
 
@@ -225,9 +256,12 @@ static BSTNode* Find(BSTNode* node, int key) {
 
 
 
-/* Returns the number of nodes contained in bst
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/* 
+ * Returns the number of nodes contained in bst
+ * 
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 int BST_Size(const BST* const bst) {
 
@@ -241,10 +275,13 @@ int BST_Size(const BST* const bst) {
 }
 
 
-/* Performs a Pre-Order traversal of bst 
-and executes the function paramater func at each node
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/*
+ * Performs a Pre-Order traversal of bst 
+ * and executes the function paramater func at each node
+ * 
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
 
@@ -254,10 +291,13 @@ void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node
 }
 
 
-/* Performs a In-Order traversal of bst 
-and executes the function paramater func at each node
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/*
+ * Performs a In-Order traversal of bst 
+ * and executes the function paramater func at each node
+ *
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
@@ -267,10 +307,13 @@ void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)
 }
 
 
-/* Performs a Post-Order traversal of bst 
-and executes the function paramater func at each node
-PRE: bst points to a properly initialized BST struct
-POST: N/A
+/* 
+ * Performs a Post-Order traversal of bst 
+ * and executes the function paramater func at each node
+ * 
+ * PRE: bst points to a properly initialized BST struct
+ * 
+ * POST: N/A
 */
 void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
 
