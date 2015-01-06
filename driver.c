@@ -20,6 +20,11 @@ static void Test_StringDT_Set(StringDT* pStringDT, const int* const key, char* p
 static void BST_Insert_Tests();
 static void Test_BST_Insert(BSTNode* pNode, char* pStr);
 
+static void BST_Pre_Order_Tests();
+static void BST_In_Order_Tests();
+static void BST_Post_Order_Tests();
+static void Print_StringDT(const BSTNode* const pNode);
+
 
 /* BST Struct */
 static BST bst;
@@ -78,6 +83,15 @@ int main () {
 	/* testing insertion on the BST */
 	BST_Insert_Tests();
 
+        /* testing preorder traversal of BST */
+        BST_Pre_Order_Tests();
+
+        /* testing inorder traversal of BST */
+        BST_In_Order_Tests();
+
+        /* testing postorder traversal of BST */
+        BST_Post_Order_Tests();
+
 	return 0;
 }
 
@@ -109,12 +123,15 @@ static void BST_Init_Tests() {
 
 	/* Test the Pre-Order Traversal of an empty BST*/
 	printf("Pre-Order: \n");
+        BST_Pre_Order(&bst, &Print_StringDT);
 
 	/* Test the In-Order Traversal of an empty BST*/
 	printf("In-Order: \n");
+        BST_In_Order(&bst, &Print_StringDT);
 
 	/* Test the Post-Order Traversal of an empty BST*/
 	printf("In-Order: \n");
+        BST_Post_Order(&bst, &Print_StringDT);
 }
 
 /*
@@ -179,4 +196,47 @@ static void Test_BST_Insert(BSTNode* pNode, char* pStr) {
 
 	printf("inserting node < %d, %s > \t: ", pNode->key, pStr);
 	BST_Insert(&bst, pNode) ? printf("OK\n") : printf("FAIL\n");
+}
+
+/*
+ * Test the pre-order traversal of the BST by printing the payload of
+ * each StringDT located in the tree
+ */
+static void BST_Pre_Order_Tests() {
+        
+        printf("\nPerforming pre-order traversal of BST...\n");
+        BST_Pre_Order(&bst, &Print_StringDT);
+        printf("\n");
+}
+
+/*
+ * Test the in-order traversal of the BST by printing the payload of
+ * each StringDT located in the tree
+ */
+static void BST_In_Order_Tests() {
+        
+        printf("\nPerforming in-order traversal of BST...\n");
+        BST_In_Order(&bst, &Print_StringDT);
+        printf("\n");
+}
+
+/*
+ * Test the post-order traversal of the BST by printing the payload of
+ * each StringDT located in the tree
+ */
+static void BST_Post_Order_Tests() {
+
+        printf("\nPerforming post-order traversal of BST...\n");
+        BST_Post_Order(&bst, &Print_StringDT);
+        printf("\n");
+}
+
+/*
+ * Print the payload of the StringDT wrapped with the specified BSTNode.
+ * This is a helper function for testing the traversals of a BST.
+ */
+static void Print_StringDT(const BSTNode* const pNode) {
+
+        StringDT *dt = BST_Entry(pNode, StringDT, node);
+        printf("%s\n", dt->payload);
 }

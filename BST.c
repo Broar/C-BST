@@ -2,8 +2,11 @@
 
 
 /* static helper method declarations */
-static bool Insert(BSTNode* root, BSTNode* node);
+static bool Insert(BSTNode** root, BSTNode* node);
 static BSTNode* Find(BSTNode* node, const int key);
+static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
+static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
+static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 
 
 /* 
@@ -117,56 +120,26 @@ bool BST_Insert(BST* const bst, BSTNode* const node) {
 	assert(bst != NULL);
 	assert(node != NULL);
 
-	BSTNode* root  = BST_Root(bst);
-
-	if (root == NULL) {
-
-		/* insert on an empty BST*/
-		bst->root = node;
-		return true;
-	}
-	else {
-
-		/* recursively insert the node in */
-		return Insert(BST_Root(bst), node);
-	}
+        return Insert(&(bst->root), node);
 }
 
 /* Recursive insert function*/
-static bool Insert(BSTNode* root, BSTNode* node) {
+static bool Insert(BSTNode** root, BSTNode* node) {
 	
 	/* insert here */
-	if (root == NULL) {
-		root = node;
+	if (*root == NULL) {
+		*root = node;
 		return true;
 	}
 
 	/* insert in the left sub-tree */
-	else if (node->key < root->key) {
-
-		BSTNode* left = BSTNode_Left(root);
-
-		if (left == NULL) {
-			root->left = node;
-			return true;
-		}
-		else {
-			return Insert(left, node);
-		}
+	else if (node->key < (*root)->key) {
+	       return Insert(&((*root)->left), node);
 	}
 
 	/* insert in the right sub-tree */
-	else if (node->key > root->key) {
-		
-		BSTNode* right = BSTNode_Right(root);
-
-		if (right == NULL) {
-			root->right = node;
-			return true;
-		}
-		else {
-			return Insert(right, node);
-		}
+	else if (node->key > (*root)->key) {
+		return Insert(&((*root)->right), node);
 	}
 
 	else {
@@ -184,8 +157,8 @@ static bool Insert(BSTNode* root, BSTNode* node) {
  * PRE: bst points to a properly initialized BST struct 
  * and node points to a properly initialized BSTNode struct
  * 
- * POST: If a node with the the key value of node already exists in bst, nothing changes.
- * Otherwise, node is inserted into the BST struct pointed to by bst
+ * POST: If a node with the the key value of node does not exist in bst, nothing changes.
+ * Otherwise, node is deleted from the BST struct pointed to by bst
 */
 bool BST_Remove(BST* const bst, BSTNode* const node) {
 
@@ -285,9 +258,23 @@ int BST_Size(const BST* const bst) {
 */
 void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
 
-	//TODO
+        assert(bst != NULL);
 
-	return;
+	Pre_Order(bst->root, visit);
+}
+
+/*
+ * Recursive traversal function for walking through the BST pre-order
+ */
+static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) {
+
+       if (node == NULL) {
+           return;
+       }
+
+       visit(node);
+       Pre_Order(node->left, visit);
+       Pre_Order(node->right, visit);
 }
 
 
@@ -301,9 +288,23 @@ void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node
 */
 void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
-	//TODO
-	
-	return;
+	assert(bst != NULL);
+
+	In_Order(bst->root, visit);
+}
+
+/*
+ * Recursive traversal function for walking through the BST in-order
+ */
+static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) {
+
+       if (node == NULL) {
+           return;
+       }
+
+       In_Order(node->left, visit);
+       visit(node);
+       In_Order(node->right, visit);
 }
 
 
@@ -317,7 +318,21 @@ void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)
 */
 void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
 
-	//TODO
-	
-	return;
+	assert(bst != NULL);
+
+	Post_Order(bst->root, visit);
+}
+
+/*
+ * Recursive traversal function for walking through the BST in-order
+ */
+static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) {
+
+       if (node == NULL) {
+           return;
+       }
+
+       Post_Order(node->left, visit);
+       Post_Order(node->right, visit);
+       visit(node);
 }
