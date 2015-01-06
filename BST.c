@@ -2,12 +2,14 @@
 
 
 /* static helper method declarations */
-
 static BSTNode* Remove(BSTNode** root, int key);
 static BSTNode* GetMax(BSTNode* node);
-static bool Insert(BSTNode** root, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
 
-static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const keyA, const BSTNode* const keyB));
+static bool Insert(BSTNode** root, BSTNode* pNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
+
+static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode, 
+	int (*compare)(const BSTNode* const keyA, const BSTNode* const keyB));
 
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
@@ -120,6 +122,7 @@ bool BST_Is_Empty(const BST* const bst) {
  * 
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
+<<<<<<< HEAD
  */
 bool BST_Insert(BST* const bst, BSTNode* pNode, 
 	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) ) {
@@ -263,10 +266,10 @@ void BST_Clear(BST* const bst) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-<<<<<<< HEAD
  */
 BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, 
 	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
+
 	assert(bst != NULL);
 
 	return Find(bst->root, pKeyNode, compare);
@@ -275,10 +278,9 @@ BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode,
 
 /* 
  * Recursive find function for searching a BST struct for a node with 
-<<<<<<< HEAD
- * a key member equal to 'key'
+ * a key member equal to the key of 'pKeyNode'
  */
-static BSTNode* Find(BSTNode* pNode, const BSTNode* const pKeyNode, 
+static BSTNode* Find(BSTNode* pNode, const BSTNode* const pKeyNode,
 	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	/* the key is not in the BST */
