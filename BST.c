@@ -161,13 +161,8 @@ static bool Insert(BSTNode** root, BSTNode* node) {
  * 
  * POST: If a node with the the key value of node does not exist in bst, nothing changes.
  * Otherwise, node is deleted from the BST struct pointed to by bst
-<<<<<<< HEAD
-*/
-BSTNode* BST_Remove(BST* const bst, int key) {
-=======
  */
-bool BST_Remove(BST* const bst, BSTNode* const node) {
->>>>>>> upstream/master
+BSTNode* BST_Remove(BST* const bst, int key) {
 
 	assert(bst != NULL);
         
