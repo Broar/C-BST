@@ -102,7 +102,8 @@ int main () {
 static void BST_Init_Tests() {
 
 	/* Initialize the BST struct bst*/
-	printf("\nTesting initialization of BST structure.\n");
+	printf("\nTesting initialization of BST structure...\n");
+	printf("********************************************\n");
 	printf("Initializing BST...\n");
 	BST_Init(&bst);
 
@@ -140,6 +141,7 @@ static void BST_Init_Tests() {
 static void StringDT_Set_Tests(){
 
 	printf("\nTesting Initialization of StringDT Wrappers...\n");
+	printf("************************************************\n");
 	Test_StringDT_Set(&zeroDT, 	&intZero, 	sZero);
 	Test_StringDT_Set(&oneDT, 	&intOne, 	sOne);
 	Test_StringDT_Set(&twoDT, 	&intTwo, 	sTwo);
@@ -170,12 +172,19 @@ static void Test_StringDT_Set(StringDT* pStringDT, const int* const pKey, char* 
 static void BST_Insert_Tests(){
 
 	printf("\nInserting nodes into BST...\n");
+	printf("*****************************\n");
 	
 	Test_BST_Insert(&fiveDT.node, 	sFive);
 	Test_BST_Insert(&threeDT.node, 	sThree);
 	Test_BST_Insert(&eightDT.node, 	sEight);
 	Test_BST_Insert(&sevenDT.node, 	sSeven);
 	Test_BST_Insert(&tenDT.node, 	sTen);
+
+	/* Test that the size of an empty BST is equal to zero */
+	printf("\nTest the Size of BST returns 5: ");
+	int size = BST_Size(&bst);
+	size == 5 ? printf("OK\n") : printf("FAIL; size == %d\n", size);
+
 	Test_BST_Insert(&fourDT.node, 	sFour);
 	Test_BST_Insert(&oneDT.node, 	sOne);
 	Test_BST_Insert(&zeroDT.node, 	sZero);
@@ -183,10 +192,16 @@ static void BST_Insert_Tests(){
 	Test_BST_Insert(&sixDT.node, 	sSix);
 	Test_BST_Insert(&nineDT.node, 	sNine);
 
-	printf("inserting duplicate node < %d, %s > : ", 5, "Five");
+	/* Test that the size of an empty BST is equal to zero */
+	printf("\nTest the Size of BST returns 11: ");
+	size = BST_Size(&bst);
+	size == 11 ? printf("OK\n") : printf("FAIL; size == %d\n", size);
+
+	printf("\nTesting that duplicate entry is rejected....\n");
+	printf("Inserting duplicate node < %d, %s > : ", 5, "Five");
 	!BST_Insert(&bst, &fiveDT.node) ? printf("OK\n") : printf("FAIL\n");
 
-	printf("BST is NOT empty: ");
+	printf("\nBST is NOT empty: ");
 	!BST_Is_Empty(&bst) ? printf("OK\n") : printf("FAIL\n");
 }
 
