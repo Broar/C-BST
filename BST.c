@@ -2,8 +2,10 @@
 
 
 /* static helper method declarations */
-static bool Insert(BSTNode** root, BSTNode* node);
-static BSTNode* Find(BSTNode* node, const int key);
+static bool Insert(BSTNode** root, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
+
+static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const keyA, const BSTNode* const keyB));
+
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
@@ -31,11 +33,11 @@ void BST_Init(BST* const bst) {
  *  
  * POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* const node, const int* const key) {
+void BSTNode_Init(BSTNode* node, const void* const key) {
 
 	assert(node != NULL);
 
-	node->key = *key;
+	node->key = key;
 	node->left = NULL;
 	node->right = NULL;
 }
@@ -115,31 +117,31 @@ bool BST_Is_Empty(const BST* const bst) {
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Insert(BST* const bst, BSTNode* const node) {
+bool BST_Insert(BST* const bst, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) ) {
 
 	assert(bst != NULL);
-	assert(node != NULL);
+	assert(pNode != NULL);
 
-        return Insert(&(bst->root), node);
+        return Insert(&(bst->root), pNode, compare);
 }
 
 /* Recursive insert function*/
-static bool Insert(BSTNode** root, BSTNode* node) {
+static bool Insert(BSTNode** root, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 	
 	/* insert here */
 	if (*root == NULL) {
-		*root = node;
+		*root = pNode;
 		return true;
 	}
 
 	/* insert in the left sub-tree */
-	else if (node->key < (*root)->key) {
-	       return Insert(&((*root)->left), node);
+	else if (compare(pNode, *root) < 0) {
+	       return Insert(&((*root)->left), pNode, compare);
 	}
 
 	/* insert in the right sub-tree */
-	else if (node->key > (*root)->key) {
-		return Insert(&((*root)->right), node);
+	else if (compare(pNode, *root) > 0) {
+		return Insert(&((*root)->right), pNode, compare);
 	}
 
 	else {
@@ -184,46 +186,47 @@ void BST_Clear(BST* const bst) {
 
 
 /* 
- * Returns a pointer to the BSTNode in bst that has a Key member equal to key
+ * Returns a pointer to the BSTNode in bst that has a Key member equal to pKeyNode's key member
  * if it exists in bst, otherwise returns NULL
  * 
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, int key) {
+BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	assert(bst != NULL);
 
-	return Find(bst->root, key);
+	return Find(bst->root, pKeyNode, compare);
 }
 
 
 /* 
  * Recursive find function for searching a BST struct for a node with 
- * a key member equal to 'key'
+ * a key member equal to the key member of pKeyNode
 */
-static BSTNode* Find(BSTNode* node, int key) {
+static BSTNode* Find(BSTNode* pNode, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	/* the key is not in the BST */
-	if (node == NULL) {
+	if (pNode == NULL) {
 		return NULL;
 	}
 
 	/* the key is to the left */
-	else if (key < node->key) {
-		return Find(BSTNode_Left(node), key);
+	else if (compare(pKeyNode, pNode) < 0) {
+
+		return Find(BSTNode_Left(pNode), pKeyNode, compare);
 	}
 
 	/* the key is to the right */
-	else if (key > node->key) {
-		return Find(BSTNode_Right(node), key);
+	else if (compare(pKeyNode, pNode) > 0) {
+		return Find(BSTNode_Right(pNode), pKeyNode, compare);
 	}
 
 	/* the key at this node */
 	else {
 
-		return node;
+		return pNode;
 	}
 } 
 

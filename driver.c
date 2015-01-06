@@ -2,16 +2,20 @@
 #include "StringDT.h"
 #include <stdio.h>
 
-/******************************* Commands *******************************/
+/********* 
+* Commands 
+**********/
 
 /* Compilation: 
 $ gcc -o driver -O0 -static -ggdb3 -std=c99 -Wall -m64 driver.c BST.c StringDT.c */
 
-/* Valgrind: 
+/* Valgrind:
 $ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -v ./driver */
 
 
-/* Test method declarations */
+/************************
+ Test method declarations
+*************************/
 static void BST_Init_Tests();
 
 static void StringDT_Set_Tests();
@@ -24,6 +28,8 @@ static void BST_Pre_Order_Tests();
 static void BST_In_Order_Tests();
 static void BST_Post_Order_Tests();
 static void Print_StringDT(const BSTNode* const pNode);
+
+static int KeyComparator(const BSTNode* const keyA, const BSTNode* const keyB);
 
 
 /* BST Struct */
@@ -43,7 +49,7 @@ char* sEight 	= "Eight";
 char* sNine 	= "Nine";
 char* sTen 		= "Ten";
 
-/* */
+/* integer keys */
 const int intZero 	= 0;
 const int intOne 	= 1;
 const int intTwo 	= 2;
@@ -116,7 +122,7 @@ static void BST_Init_Tests() {
 
 	/* Test that find returns NULL when calling an empty tree */
 	printf("Searching empty BST returns NULL: ");
-	BST_Find(&bst, 100) == NULL ? printf("OK\n") : printf("FAIL\n");
+	BST_Find(&bst, &oneDT.node, &KeyComparator) == NULL ? printf("OK\n") : printf("FAIL\n");
 
 	/* Test that the size of an empty BST is equal to zero */
 	printf("Size of empty BST returns 0: ");
@@ -184,7 +190,7 @@ static void BST_Insert_Tests(){
 	Test_BST_Insert(&nineDT.node, 	sNine);
 
 	printf("inserting duplicate node < %d, %s > : ", 5, "Five");
-	!BST_Insert(&bst, &fiveDT.node) ? printf("OK\n") : printf("FAIL\n");
+	!BST_Insert(&bst, &fiveDT.node, &KeyComparator) ? printf("OK\n") : printf("FAIL\n");
 
 	printf("BST is NOT empty: ");
 	!BST_Is_Empty(&bst) ? printf("OK\n") : printf("FAIL\n");
@@ -195,8 +201,8 @@ static void BST_Insert_Tests(){
 */
 static void Test_BST_Insert(BSTNode* pNode, char* pStr) {
 
-	printf("inserting node < %d, %s > \t: ", pNode->key, pStr);
-	BST_Insert(&bst, pNode) ? printf("OK\n") : printf("FAIL\n");
+	printf("inserting node < %d, %s > \t: ", *(int*)pNode->key, pStr);
+	BST_Insert(&bst, pNode, &KeyComparator) ? printf("OK\n") : printf("FAIL\n");
 }
 
 /*
@@ -240,4 +246,9 @@ static void Print_StringDT(const BSTNode* const pNode) {
 
         StringDT *dt = BST_Entry(pNode, StringDT, node);
         printf("%s\n", dt->payload);
+}
+
+static int KeyComparator(const BSTNode* const pNodeA, const BSTNode* const pNodeB) {
+	
+	return *((int*)(pNodeA->key)) - *((int*)(pNodeB->key));
 }
