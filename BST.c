@@ -178,11 +178,11 @@ static bool Insert(BSTNode** root, BSTNode* pNode,
 	assert(bst != NULL);
 	assert(pKeyNode != NULL);
         
-    BSTNode* temp = BST_Find(bst, pKeyNode, compare);
+        BSTNode* temp = BST_Find(bst, pKeyNode, compare);
 
-    if (temp != NULL) {
-        bst->root = Remove(&(bst->root), pKeyNode, compare);
-    }
+        if (temp != NULL) {
+            bst->root = Remove(&(bst->root), pKeyNode, compare);
+        }
 
 	return temp;
 }
@@ -228,8 +228,6 @@ static BSTNode* Remove(BSTNode** root, const BSTNode* const pKeyNode,
                 /* Root has two children, so we must find a replacement */
                 else {
                         BSTNode* temp = GetMax((*root)->left);
-
-                        //(*root)->left = Remove(&((*root)->left), temp->key);
                         (*root)->left = Remove(&((*root)->left), temp, compare);
 
                         temp->left = (*root)->left;
