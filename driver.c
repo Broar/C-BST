@@ -32,17 +32,18 @@ static BST bst;
 
 /* Strings */
 char* sZero 	= "Zero";
-char* sOne 	= "One";
-char* sTwo 	= "Two";
+char* sOne 		= "One";
+char* sTwo 		= "Two";
 char* sThree 	= "Three";
 char* sFour 	= "Four";
 char* sFive 	= "Five";
-char* sSix 	= "Six";
+char* sSix 		= "Six";
 char* sSeven 	= "Seven";
 char* sEight 	= "Eight";
 char* sNine 	= "Nine";
-char* sTen 	= "Ten";
+char* sTen 		= "Ten";
 
+/* */
 const int intZero 	= 0;
 const int intOne 	= 1;
 const int intTwo 	= 2;
@@ -83,14 +84,14 @@ int main () {
 	/* testing insertion on the BST */
 	BST_Insert_Tests();
 
-        /* testing preorder traversal of BST */
-        BST_Pre_Order_Tests();
+    /* testing preorder traversal of BST */
+    BST_Pre_Order_Tests();
 
-        /* testing inorder traversal of BST */
-        BST_In_Order_Tests();
+    /* testing inorder traversal of BST */
+    BST_In_Order_Tests();
 
-        /* testing postorder traversal of BST */
-        BST_Post_Order_Tests();
+    /* testing postorder traversal of BST */
+    BST_Post_Order_Tests();
 
 	return 0;
 }
@@ -123,15 +124,15 @@ static void BST_Init_Tests() {
 
 	/* Test the Pre-Order Traversal of an empty BST*/
 	printf("Pre-Order: \n");
-        BST_Pre_Order(&bst, &Print_StringDT);
+	BST_Pre_Order(&bst, &Print_StringDT);
 
 	/* Test the In-Order Traversal of an empty BST*/
 	printf("In-Order: \n");
-        BST_In_Order(&bst, &Print_StringDT);
+	BST_In_Order(&bst, &Print_StringDT);
 
 	/* Test the Post-Order Traversal of an empty BST*/
 	printf("In-Order: \n");
-        BST_Post_Order(&bst, &Print_StringDT);
+	BST_Post_Order(&bst, &Print_StringDT);
 }
 
 /*
@@ -170,17 +171,17 @@ static void BST_Insert_Tests(){
 
 	printf("\nInserting nodes into BST...\n");
 	
-	Test_BST_Insert(&fiveDT.node, sFive);
-	Test_BST_Insert(&threeDT.node, sThree);
-	Test_BST_Insert(&eightDT.node, sEight);
-	Test_BST_Insert(&sevenDT.node, sSeven);
-	Test_BST_Insert(&tenDT.node, sTen);
-	Test_BST_Insert(&fourDT.node, sFour);
-	Test_BST_Insert(&oneDT.node, sOne);
-	Test_BST_Insert(&zeroDT.node, sZero);
-	Test_BST_Insert(&twoDT.node, sTwo);
-	Test_BST_Insert(&sixDT.node, sSix);
-	Test_BST_Insert(&nineDT.node, sNine);
+	Test_BST_Insert(&fiveDT.node, 	sFive);
+	Test_BST_Insert(&threeDT.node, 	sThree);
+	Test_BST_Insert(&eightDT.node, 	sEight);
+	Test_BST_Insert(&sevenDT.node, 	sSeven);
+	Test_BST_Insert(&tenDT.node, 	sTen);
+	Test_BST_Insert(&fourDT.node, 	sFour);
+	Test_BST_Insert(&oneDT.node, 	sOne);
+	Test_BST_Insert(&zeroDT.node, 	sZero);
+	Test_BST_Insert(&twoDT.node, 	sTwo);
+	Test_BST_Insert(&sixDT.node, 	sSix);
+	Test_BST_Insert(&nineDT.node, 	sNine);
 
 	printf("inserting duplicate node < %d, %s > : ", 5, "Five");
 	!BST_Insert(&bst, &fiveDT.node) ? printf("OK\n") : printf("FAIL\n");

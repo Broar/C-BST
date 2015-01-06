@@ -167,7 +167,7 @@ int BST_Size(const BST* const bst);
  * 
  * POST: N/A
 */
-void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node) );
+void BST_Pre_Order(const BST* const bst, void (*visit)(const BSTNode* const node) );
 
 
 /* 
@@ -189,7 +189,7 @@ void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)
  * 
  * POST: N/A
 */
-void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node) );
+void BST_Post_Order(const BST* const bst, void (*visit)(const BSTNode* const node) );
 
 
 #endif

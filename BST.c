@@ -256,7 +256,7 @@ int BST_Size(const BST* const bst) {
  * 
  * POST: N/A
 */
-void BST_Pre_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
+void BST_Pre_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
         assert(bst != NULL);
 
@@ -316,7 +316,7 @@ static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) {
  * 
  * POST: N/A
 */
-void BST_Post_Order(const BST const *bst, void (*visit)(const BSTNode* const node)) {
+void BST_Post_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
 	assert(bst != NULL);
 
