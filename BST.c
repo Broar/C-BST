@@ -9,6 +9,7 @@ static BSTNode* Find(BSTNode* node, const int key);
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
+static int Size(const BSTNode* const pNode);
 
 
 /* 
@@ -17,7 +18,7 @@ static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
  * PRE: bst points to an initialized BST struct
  * 
  * POST: BST bst is an empty with a NULL root node
-*/
+ */
 void BST_Init(BST* const bst) {
 
 	assert(bst != NULL);
@@ -32,7 +33,7 @@ void BST_Init(BST* const bst) {
  * PRE: bst points to an initialized BSTNode struct
  *  
  * POST: bstNode is an empty node with no child nodes
-*/
+ */
 void BSTNode_Init(BSTNode* const node, const int* const key) {
 
 	assert(node != NULL);
@@ -49,7 +50,7 @@ void BSTNode_Init(BSTNode* const node, const int* const key) {
  * PRE: node points to a properly initialized BSTNode struct
  * 
  * POST: N/A
-*/
+ */
 BSTNode* BSTNode_Left(const BSTNode* const node) {
 
 	assert(node != NULL);
@@ -65,7 +66,7 @@ BSTNode* BSTNode_Left(const BSTNode* const node) {
  * PRE: node points to a properly initialized BSTNode struct
  * 
  * POST: N/A
-*/
+ */
 BSTNode* BSTNode_Right(const BSTNode* const node) {
 
 	assert(node != NULL);
@@ -81,7 +82,7 @@ BSTNode* BSTNode_Right(const BSTNode* const node) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 BSTNode* BST_Root(const BST* const bst) {
 
 	assert(bst != NULL);
@@ -97,7 +98,7 @@ BSTNode* BST_Root(const BST* const bst) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 bool BST_Is_Empty(const BST* const bst) {
 
 	assert(bst != NULL);
@@ -116,7 +117,7 @@ bool BST_Is_Empty(const BST* const bst) {
  * 
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
-*/
+ */
 bool BST_Insert(BST* const bst, BSTNode* const node) {
 
 	assert(bst != NULL);
@@ -160,8 +161,13 @@ static bool Insert(BSTNode** root, BSTNode* node) {
  * 
  * POST: If a node with the the key value of node does not exist in bst, nothing changes.
  * Otherwise, node is deleted from the BST struct pointed to by bst
+<<<<<<< HEAD
 */
 BSTNode* BST_Remove(BST* const bst, int key) {
+=======
+ */
+bool BST_Remove(BST* const bst, BSTNode* const node) {
+>>>>>>> upstream/master
 
 	assert(bst != NULL);
         
@@ -241,7 +247,7 @@ static BSTNode* GetMax(BSTNode* node) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: bst points to an empty BST struct whose root BSTNode is NULL
-*/
+ */
 void BST_Clear(BST* const bst) {
 
 	assert(bst != NULL);
@@ -257,7 +263,7 @@ void BST_Clear(BST* const bst) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 BSTNode* BST_Find(const BST* const bst, int key) {
 
 	assert(bst != NULL);
@@ -269,7 +275,7 @@ BSTNode* BST_Find(const BST* const bst, int key) {
 /* 
  * Recursive find function for searching a BST struct for a node with 
  * a key member equal to 'key'
-*/
+ */
 static BSTNode* Find(BSTNode* node, int key) {
 
 	/* the key is not in the BST */
@@ -302,16 +308,12 @@ static BSTNode* Find(BSTNode* node, int key) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 int BST_Size(const BST* const bst) {
 
 	assert(bst != NULL);
 
-	//TODO
-	/* run a traversal, sending in a function that counts up the nodes
-	as they are visited */
-
-	return -1;
+	return Size(bst->root);
 }
 
 
@@ -322,10 +324,10 @@ int BST_Size(const BST* const bst) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 void BST_Pre_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
-        assert(bst != NULL);
+	assert(bst != NULL);
 
 	Pre_Order(bst->root, visit);
 }
@@ -352,7 +354,7 @@ static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
 	assert(bst != NULL);
@@ -382,7 +384,7 @@ static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) {
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
-*/
+ */
 void BST_Post_Order(const BST* const bst, void (*visit)(const BSTNode* const node)) {
 
 	assert(bst != NULL);
@@ -402,4 +404,21 @@ static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node)) 
        Post_Order(node->left, visit);
        Post_Order(node->right, visit);
        visit(node);
+}
+
+
+/*
+ * Recursive function for counting up the number of nodes in a BST
+ */
+static int Size(const BSTNode* const pNode) {
+
+	if (pNode == NULL) {
+
+		return 0;
+	}
+	else {
+
+		/* recursively call size on the left and right child nodes */
+		return (1 + Size(pNode->left) + Size(pNode->right));
+	}
 }
