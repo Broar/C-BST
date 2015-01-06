@@ -2,9 +2,11 @@
 
 
 /* static helper method declarations */
-static bool Insert(BSTNode** root, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
+static bool Insert(BSTNode** root, BSTNode* pNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
 
-static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const keyA, const BSTNode* const keyB));
+static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode, 
+	int (*compare)(const BSTNode* const keyA, const BSTNode* const keyB));
 
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
@@ -117,7 +119,8 @@ bool BST_Is_Empty(const BST* const bst) {
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Insert(BST* const bst, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) ) {
+bool BST_Insert(BST* const bst, BSTNode* pNode, 
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) ) {
 
 	assert(bst != NULL);
 	assert(pNode != NULL);
@@ -126,7 +129,8 @@ bool BST_Insert(BST* const bst, BSTNode* pNode, int (*compare)(const BSTNode* co
 }
 
 /* Recursive insert function*/
-static bool Insert(BSTNode** root, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
+static bool Insert(BSTNode** root, BSTNode* pNode, 
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 	
 	/* insert here */
 	if (*root == NULL) {
@@ -193,7 +197,8 @@ void BST_Clear(BST* const bst) {
  * 
  * POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
+BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	assert(bst != NULL);
 
@@ -205,7 +210,8 @@ BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, int (*com
  * Recursive find function for searching a BST struct for a node with 
  * a key member equal to the key member of pKeyNode
 */
-static BSTNode* Find(BSTNode* pNode, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
+static BSTNode* Find(BSTNode* pNode, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	/* the key is not in the BST */
 	if (pNode == NULL) {
