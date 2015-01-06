@@ -3,6 +3,8 @@
 
 /* static helper method declarations */
 static bool Insert(BSTNode** root, BSTNode* node);
+static BSTNode* Remove(BSTNode** root, int key);
+static BSTNode* GetMax(BSTNode* node);
 static BSTNode* Find(BSTNode* node, const int key);
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
@@ -151,22 +153,87 @@ static bool Insert(BSTNode** root, BSTNode* node) {
 
 
 /* 
- * Removes node from bst if it exists and returns true,
- * otherwise, returns false
+ * Removes node from bst if it exists and returns the removed node.
+ * Otherwise, returns NULL.
  * 
  * PRE: bst points to a properly initialized BST struct 
- * and node points to a properly initialized BSTNode struct
  * 
  * POST: If a node with the the key value of node does not exist in bst, nothing changes.
  * Otherwise, node is deleted from the BST struct pointed to by bst
 */
-bool BST_Remove(BST* const bst, BSTNode* const node) {
+BSTNode* BST_Remove(BST* const bst, int key) {
 
-	//TODO
-	return false;
+	assert(bst != NULL);
+        
+        BSTNode* temp = BST_Find(bst, key);
+
+        if (temp != NULL) {
+            bst->root = Remove(&(bst->root), key);
+        }
+
+	return temp;
 }
 
+/*
+ * Recurisvely remove the specified node from the subtree pointed to by root.
+ * When removing a node with two children, the replacement node is the largest
+ * node in the parent's left subtree.
+ */
+static BSTNode* Remove(BSTNode** root, int key) {
+        
+        /* The node to delete does not exist in the tree */
+        if (*root == NULL) {
+                return NULL;
+        }
 
+        /* The node to delete is in the left subtree */
+        else if (key < (*root)->key) {
+                (*root)->left = Remove(&((*root)->left), key);
+        }
+
+        /* The node to delete is in the right subtree */
+        else if (key > (*root)->key) {
+                (*root)->right = Remove(&((*root)->right), key);
+        }
+
+        /* The node to delete is here */
+        else {
+
+                /* Root has either one or no children */
+                if ((*root)->left == NULL) {
+                        return (*root)->right;
+                }
+
+                
+                else if ((*root)->right == NULL) {
+                        return (*root)->left;
+                }
+
+                /* Root has two children, so we must find a replacement */
+                else {
+                        BSTNode* temp = GetMax((*root)->left);
+                        (*root)->left = Remove(&((*root)->left), temp->key);
+
+                        temp->left = (*root)->left;
+                        temp->right = (*root)->right;
+                        *root = temp;
+                }  
+        }
+
+        return *root;
+}
+
+/*
+ * Return the largest node in the subtree pointed to by node
+ */
+static BSTNode* GetMax(BSTNode* node) {
+        
+       while (node->right != NULL) {
+           node = node->right;
+       }
+
+       return node;
+}
 
 /* 
  * Clears all nodes from bst

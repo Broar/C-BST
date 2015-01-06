@@ -20,6 +20,9 @@ static void Test_StringDT_Set(StringDT* pStringDT, const int* const key, char* p
 static void BST_Insert_Tests();
 static void Test_BST_Insert(BSTNode* pNode, char* pStr);
 
+static void BST_Remove_Tests();
+static void Test_BST_Remove(int key);
+
 static void BST_Pre_Order_Tests();
 static void BST_In_Order_Tests();
 static void BST_Post_Order_Tests();
@@ -84,16 +87,19 @@ int main () {
 	/* testing insertion on the BST */
 	BST_Insert_Tests();
 
-    /* testing preorder traversal of BST */
-    BST_Pre_Order_Tests();
+        /* testing preorder traversal of BST */
+        BST_Pre_Order_Tests();
 
-    /* testing inorder traversal of BST */
-    BST_In_Order_Tests();
+        /* testing inorder traversal of BST */
+        BST_In_Order_Tests();
 
-    /* testing postorder traversal of BST */
-    BST_Post_Order_Tests();
+        /* testing postorder traversal of BST */
+        BST_Post_Order_Tests();
 
-	return 0;
+        /* testing removal of nodes from BST */
+        BST_Remove_Tests();
+
+        return 0;
 }
 
 
@@ -122,6 +128,10 @@ static void BST_Init_Tests() {
 	printf("Size of empty BST returns 0: ");
 	BST_Size(&bst) == 0 ? printf("OK\n") : printf("FAIL\n");
 
+        /* Test that removal of a node in an empty tree returns NULL */
+        printf("Deletion of non-existent node in empty BST returns NULL: ");
+        BST_Remove(&bst, 0) == NULL ? printf("OK\n") : printf("FAIL\n");
+
 	/* Test the Pre-Order Traversal of an empty BST*/
 	printf("Pre-Order: \n");
 	BST_Pre_Order(&bst, &Print_StringDT);
@@ -131,7 +141,7 @@ static void BST_Init_Tests() {
 	BST_In_Order(&bst, &Print_StringDT);
 
 	/* Test the Post-Order Traversal of an empty BST*/
-	printf("In-Order: \n");
+	printf("Post-Order: \n");
 	BST_Post_Order(&bst, &Print_StringDT);
 }
 
@@ -197,6 +207,40 @@ static void Test_BST_Insert(BSTNode* pNode, char* pStr) {
 
 	printf("inserting node < %d, %s > \t: ", pNode->key, pStr);
 	BST_Insert(&bst, pNode) ? printf("OK\n") : printf("FAIL\n");
+}
+
+/*
+ * Test removing all of the nodes from the BST.
+ */
+static void BST_Remove_Tests() {
+
+        printf("\nRemoving all nodes from BST...\n");
+        
+        Test_BST_Remove(intZero);
+        Test_BST_Remove(intOne);
+        Test_BST_Remove(intFive);
+        Test_BST_Remove(intEight);
+        Test_BST_Remove(intNine);
+        Test_BST_Remove(intSeven);
+        Test_BST_Remove(intTen);
+        Test_BST_Remove(intTwo);
+        Test_BST_Remove(intSix);
+        Test_BST_Remove(intFour);
+        Test_BST_Remove(intThree);
+
+        printf("BST is empty: ");
+        BST_Is_Empty(&bst) ? printf("OK\n") : printf("FAIL\n");
+}
+
+/*
+ * A helper function for removing a node from the BST and verifying the
+ * results of the removal.
+ */
+static void Test_BST_Remove(int key) {
+        
+        printf("removing node < %d > \t: ", key);
+        BSTNode* temp = BST_Remove(&bst, key);
+        temp->key == key ? printf("OK\n") : printf("FAIL\n");
 }
 
 /*
