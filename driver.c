@@ -87,19 +87,19 @@ int main () {
 	/* testing insertion on the BST */
 	BST_Insert_Tests();
 
-        /* testing preorder traversal of BST */
-        BST_Pre_Order_Tests();
+    /* testing preorder traversal of BST */
+    BST_Pre_Order_Tests();
 
-        /* testing inorder traversal of BST */
-        BST_In_Order_Tests();
+    /* testing inorder traversal of BST */
+    BST_In_Order_Tests();
 
-        /* testing postorder traversal of BST */
-        BST_Post_Order_Tests();
+    /* testing postorder traversal of BST */
+    BST_Post_Order_Tests();
 
-        /* testing removal of nodes from BST */
-        BST_Remove_Tests();
+    /* testing removal of nodes from BST */
+    BST_Remove_Tests();
 
-        return 0;
+    return 0;
 }
 
 
@@ -230,6 +230,7 @@ static void Test_BST_Insert(BSTNode* pNode, char* pStr) {
 static void BST_Remove_Tests() {
 
         printf("\nRemoving all nodes from BST...\n");
+        printf("*****************************\n");
         
         Test_BST_Remove(intZero);
         Test_BST_Remove(intOne);
@@ -237,6 +238,15 @@ static void BST_Remove_Tests() {
         Test_BST_Remove(intEight);
         Test_BST_Remove(intNine);
         Test_BST_Remove(intSeven);
+
+        printf("\nTesting that the Size is now 5: ");
+        int size = BST_Size(&bst);
+        size == 5 ? printf("OK\n") : printf("Fail; size = %d", size);
+
+        printf("\nPerforming in-order traversal of half-empty BST...\n");
+        BST_In_Order(&bst, &Print_StringDT);
+        printf("\n");
+
         Test_BST_Remove(intTen);
         Test_BST_Remove(intTwo);
         Test_BST_Remove(intSix);
