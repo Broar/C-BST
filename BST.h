@@ -120,12 +120,11 @@ bool BST_Insert(BST* const bst, BSTNode* const node);
  * otherwise, returns false
  * 
  * PRE: bst points to a properly initialized BST struct 
- * and node points to a properly initialized BSTNode struct
  * 
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Remove(BST* const bst, BSTNode* const node);
+BSTNode* BST_Remove(BST* const bst, int key);
 
 
 /* 
