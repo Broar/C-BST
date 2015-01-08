@@ -54,7 +54,7 @@ void BST_Init(BST* const bst);
  * 
  * POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* node, const void* const key);
+void BSTNode_Init(BSTNode* node, void* key);
 
 
 /* 
@@ -112,20 +112,19 @@ bool BST_Is_Empty(const BST* const bst);
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Insert(BST* const bst, BSTNode* pNode, 
-	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) );
+bool BST_Insert(BST* const bst, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
 
 
 /* 
- * Removes node from bst if it exists and returns true,
- * otherwise, returns false
+ * Removes node from bst if it exists and returns the removed node.
+ * Otherwise, returns NULL.
  * 
  * PRE: bst points to a properly initialized BST struct 
  * 
- * POST: If a node with the the key value of node already exists in bst, nothing changes.
- * Otherwise, node is inserted into the BST struct pointed to by bst
-*/
-BSTNode* BST_Remove(BST* const bst, int key);
+ * POST: If a node with the the key value of node does not exist in bst, nothing changes.
+ * Otherwise, node is deleted from the BST struct pointed to by bst
+ */
+BSTNode* BST_Remove(BST* bst, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
 
 
 /* 
@@ -146,8 +145,7 @@ void BST_Clear(BST* const bst);
  * 
  * POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, 
-	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) );
+BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) );
 
 
 /* 
@@ -168,8 +166,7 @@ int BST_Size(const BST* const bst);
  * 
  * POST: N/A
 */
-void BST_Pre_Order(const BST* const bst, 
-	void (*visit)(const BSTNode* const node) );
+void BST_Pre_Order(const BST* const bst, void (*visit)(const BSTNode* const node) );
 
 
 /* 
@@ -180,8 +177,7 @@ void BST_Pre_Order(const BST* const bst,
  * 
  * POST: N/A
 */
-void BST_In_Order(const BST* const bst,
-	void (*visit)(const BSTNode* const node) );
+void BST_In_Order(const BST* const bst, void (*visit)(const BSTNode* const node) );
 
 
 /* 
@@ -192,8 +188,7 @@ void BST_In_Order(const BST* const bst,
  * 
  * POST: N/A
 */
-void BST_Post_Order(const BST* const bst,
-	void (*visit)(const BSTNode* const node) );
+void BST_Post_Order(const BST* const bst, void (*visit)(const BSTNode* const node) );
 
 
 #endif

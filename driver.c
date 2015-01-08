@@ -25,7 +25,7 @@ static void BST_Insert_Tests();
 static void Test_BST_Insert(BSTNode* pNode, char* pStr);
 
 static void BST_Remove_Tests();
-static void Test_BST_Remove(int key);
+static void Test_BST_Remove(BSTNode* pNode);
 
 static void BST_Pre_Order_Tests();
 static void BST_In_Order_Tests();
@@ -135,9 +135,10 @@ static void BST_Init_Tests() {
 	printf("Size of empty BST returns 0: ");
 	BST_Size(&bst) == 0 ? printf("OK\n") : printf("FAIL\n");
 
-        /* Test that removal of a node in an empty tree returns NULL */
-        printf("Deletion of non-existent node in empty BST returns NULL: ");
-        BST_Remove(&bst, 0) == NULL ? printf("OK\n") : printf("FAIL\n");
+    /* Test that removal of a node in an empty tree returns NULL */
+
+    printf("Deletion of non-existent node in empty BST returns NULL: ");
+    BST_Remove(&bst, &zeroDT.node, &KeyComparator ) == NULL ? printf("OK\n") : printf("FAIL\n");
 
 	/* Test the Pre-Order Traversal of an empty BST*/
 	printf("Pre-Order: \n");
@@ -154,7 +155,7 @@ static void BST_Init_Tests() {
 
 /*
 */
-static void StringDT_Set_Tests(){
+static void StringDT_Set_Tests() {
 
 	printf("\nTesting Initialization of StringDT Wrappers...\n");
 	printf("************************************************\n");
@@ -185,7 +186,7 @@ static void Test_StringDT_Set(StringDT* pStringDT, const int* const pKey, char* 
 
 /*
 */
-static void BST_Insert_Tests(){
+static void BST_Insert_Tests() {
 
 	printf("\nInserting nodes into BST...\n");
 	printf("*****************************\n");
@@ -197,9 +198,9 @@ static void BST_Insert_Tests(){
 	Test_BST_Insert(&tenDT.node, 	sTen);
 
 	/* Test that the size of an empty BST is equal to zero */
-	printf("\nTest the Size of BST returns 5: ");
+	printf("\nTest the Size of BST returns 5");
 	int size = BST_Size(&bst);
-	size == 5 ? printf("OK\n") : printf("FAIL; size == %d\n", size);
+	size == 5 ? printf("\t: OK\n") : printf("\t:FAIL; size == %d\n", size);
 
 	Test_BST_Insert(&fourDT.node, 	sFour);
 	Test_BST_Insert(&oneDT.node, 	sOne);
@@ -229,6 +230,8 @@ static void Test_BST_Insert(BSTNode* pNode, char* pStr) {
 	BST_Insert(&bst, pNode, &KeyComparator) ? printf("OK\n") : printf("FAIL\n");
 }
 
+
+
 /*
  * Test removing all of the nodes from the BST.
  */
@@ -237,12 +240,12 @@ static void BST_Remove_Tests() {
         printf("\nRemoving all nodes from BST...\n");
         printf("*****************************\n");
         
-        Test_BST_Remove(intZero);
-        Test_BST_Remove(intOne);
-        Test_BST_Remove(intFive);
-        Test_BST_Remove(intEight);
-        Test_BST_Remove(intNine);
-        Test_BST_Remove(intSeven);
+        Test_BST_Remove(&zeroDT.node);
+        Test_BST_Remove(&oneDT.node);
+        Test_BST_Remove(&fiveDT.node);
+        Test_BST_Remove(&eightDT.node);
+        Test_BST_Remove(&nineDT.node);
+        Test_BST_Remove(&sevenDT.node);
 
         printf("\nTesting that the Size is now 5: ");
         int size = BST_Size(&bst);
@@ -252,26 +255,29 @@ static void BST_Remove_Tests() {
         BST_In_Order(&bst, &Print_StringDT);
         printf("\n");
 
-        Test_BST_Remove(intTen);
-        Test_BST_Remove(intTwo);
-        Test_BST_Remove(intSix);
-        Test_BST_Remove(intFour);
-        Test_BST_Remove(intThree);
+        Test_BST_Remove(&tenDT.node);
+        Test_BST_Remove(&twoDT.node);
+        Test_BST_Remove(&sixDT.node);
+        Test_BST_Remove(&fourDT.node);
+        Test_BST_Remove(&threeDT.node);
 
         printf("BST is empty: ");
         BST_Is_Empty(&bst) ? printf("OK\n") : printf("FAIL\n");
 }
 
+
+
 /*
  * A helper function for removing a node from the BST and verifying the
  * results of the removal.
  */
-static void Test_BST_Remove(int key) {
+static void Test_BST_Remove(BSTNode* pNode) {
         
-        printf("removing node < %d > \t: ", key);
-        BSTNode* temp = BST_Remove(&bst, key);
-        temp->key == key ? printf("OK\n") : printf("FAIL\n");
+        printf("removing node: key= %d\t: ", *((int*)pNode->key));
+        BSTNode* temp = BST_Remove(&bst, pNode, &KeyComparator);
+        *((int*)(temp->key)) == *((int*)(pNode->key)) ? printf("OK\n") : printf("FAIL\n");
 }
+
 
 /*
  * Test the pre-order traversal of the BST by printing the payload of

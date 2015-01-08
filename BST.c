@@ -2,7 +2,9 @@
 
 
 /* static helper method declarations */
-static BSTNode* Remove(BSTNode** root, int key);
+static BSTNode* Remove(BSTNode** root, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
+
 static BSTNode* GetMax(BSTNode* node);
 
 static bool Insert(BSTNode** root, BSTNode* pNode,
@@ -14,6 +16,7 @@ static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode,
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
+
 static int Size(const BSTNode* const pNode);
 
 
@@ -39,7 +42,7 @@ void BST_Init(BST* const bst) {
  *  
  * POST: bstNode is an empty node with no child nodes
  */
-void BSTNode_Init(BSTNode* node, const void* const key) {
+void BSTNode_Init(BSTNode* node, void* key) {
 
 	assert(node != NULL);
 
@@ -169,15 +172,17 @@ static bool Insert(BSTNode** root, BSTNode* pNode,
  * POST: If a node with the the key value of node does not exist in bst, nothing changes.
  * Otherwise, node is deleted from the BST struct pointed to by bst
  */
-BSTNode* BST_Remove(BST* const bst, int key) {
+ BSTNode* BST_Remove(BST* bst, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	assert(bst != NULL);
+	assert(pKeyNode != NULL);
         
-        BSTNode* temp = BST_Find(bst, key);
+    BSTNode* temp = BST_Find(bst, pKeyNode, compare);
 
-        if (temp != NULL) {
-            bst->root = Remove(&(bst->root), key);
-        }
+    if (temp != NULL) {
+        bst->root = Remove(&(bst->root), pKeyNode, compare);
+    }
 
 	return temp;
 }
@@ -187,7 +192,8 @@ BSTNode* BST_Remove(BST* const bst, int key) {
  * When removing a node with two children, the replacement node is the largest
  * node in the parent's left subtree.
  */
-static BSTNode* Remove(BSTNode** root, int key) {
+static BSTNode* Remove(BSTNode** root, const BSTNode* const pKeyNode, 
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
         
         /* The node to delete does not exist in the tree */
         if (*root == NULL) {
@@ -195,13 +201,15 @@ static BSTNode* Remove(BSTNode** root, int key) {
         }
 
         /* The node to delete is in the left subtree */
-        else if (key < (*root)->key) {
-                (*root)->left = Remove(&((*root)->left), key);
+        else if (compare(pKeyNode, *root) < 0) {
+
+                (*root)->left = Remove(&((*root)->left), pKeyNode, compare);
         }
 
         /* The node to delete is in the right subtree */
-        else if (key > (*root)->key) {
-                (*root)->right = Remove(&((*root)->right), key);
+        else if (compare(pKeyNode, *root) > 0) {
+
+                (*root)->right = Remove(&((*root)->right), pKeyNode, compare);
         }
 
         /* The node to delete is here */
@@ -220,7 +228,9 @@ static BSTNode* Remove(BSTNode** root, int key) {
                 /* Root has two children, so we must find a replacement */
                 else {
                         BSTNode* temp = GetMax((*root)->left);
-                        (*root)->left = Remove(&((*root)->left), temp->key);
+
+                        //(*root)->left = Remove(&((*root)->left), temp->key);
+                        (*root)->left = Remove(&((*root)->left), temp, compare);
 
                         temp->left = (*root)->left;
                         temp->right = (*root)->right;
