@@ -146,7 +146,6 @@ void BST_Clear(BST* const bst);
  * 
  * POST: N/A
 */
-
 BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, 
 	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) );
 

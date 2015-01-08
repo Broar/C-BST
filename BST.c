@@ -122,7 +122,6 @@ bool BST_Is_Empty(const BST* const bst) {
  * 
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
-<<<<<<< HEAD
  */
 bool BST_Insert(BST* const bst, BSTNode* pNode, 
 	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) ) {
@@ -267,7 +266,7 @@ void BST_Clear(BST* const bst) {
  * 
  * POST: N/A
  */
-BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, 
+BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode,
 	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	assert(bst != NULL);
