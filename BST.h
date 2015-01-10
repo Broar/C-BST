@@ -20,7 +20,7 @@ typedef struct _BST BST;
 /* BSTNode: */
 struct _BSTNode {
 
-	int  	key;				/* key for this node */
+	void*  	key;				/* key for this node */
 	struct _BSTNode* left;		/* left child node */
 	struct _BSTNode* right;		/* right child node */
 };
@@ -54,7 +54,7 @@ void BST_Init(BST* const bst);
  * 
  * POST: bstNode is an empty node with no child nodes
 */
-void BSTNode_Init(BSTNode* const node, const int* const key);
+void BSTNode_Init(BSTNode* node, void* key);
 
 
 /* 
@@ -112,19 +112,19 @@ bool BST_Is_Empty(const BST* const bst);
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
 */
-bool BST_Insert(BST* const bst, BSTNode* const node);
+bool BST_Insert(BST* const bst, BSTNode* pNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
 
 
 /* 
- * Removes node from bst if it exists and returns true,
- * otherwise, returns false
+ * Removes node from bst if it exists and returns the removed node.
+ * Otherwise, returns NULL.
  * 
  * PRE: bst points to a properly initialized BST struct 
  * 
- * POST: If a node with the the key value of node already exists in bst, nothing changes.
- * Otherwise, node is inserted into the BST struct pointed to by bst
-*/
-BSTNode* BST_Remove(BST* const bst, int key);
+ * POST: If a node with the the key value of node does not exist in bst, nothing changes.
+ * Otherwise, node is deleted from the BST struct pointed to by bst
+ */
+BSTNode* BST_Remove(BST* bst, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
 
 
 /* 
@@ -138,14 +138,14 @@ void BST_Clear(BST* const bst);
 
 
 /* 
- * Returns a pointer to the BSTNode in bst that has a Key member equal to key
- * if it exists in bst, otherwise returns null
+ * Returns a pointer to the BSTNode in bst that has a Key member equal to pKeyNode's key member
+ * if it exists in bst, otherwise returns NULL
  * 
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
 */
-BSTNode* BST_Find(const BST* const bst, int key);
+BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode, int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) );
 
 
 /* 

@@ -2,13 +2,21 @@
 
 
 /* static helper method declarations */
-static bool Insert(BSTNode** root, BSTNode* node);
-static BSTNode* Remove(BSTNode** root, int key);
+static BSTNode* Remove(BSTNode** root, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
+
 static BSTNode* GetMax(BSTNode* node);
-static BSTNode* Find(BSTNode* node, const int key);
+
+static bool Insert(BSTNode** root, BSTNode* pNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB));
+
+static BSTNode* Find(BSTNode* root, const BSTNode* const pKeyNode, 
+	int (*compare)(const BSTNode* const keyA, const BSTNode* const keyB));
+
 static void Pre_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void In_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
 static void Post_Order(BSTNode* node, void (*visit)(const BSTNode* const node));
+
 static int Size(const BSTNode* const pNode);
 
 
@@ -34,11 +42,11 @@ void BST_Init(BST* const bst) {
  *  
  * POST: bstNode is an empty node with no child nodes
  */
-void BSTNode_Init(BSTNode* const node, const int* const key) {
+void BSTNode_Init(BSTNode* node, void* key) {
 
 	assert(node != NULL);
 
-	node->key = *key;
+	node->key = key;
 	node->left = NULL;
 	node->right = NULL;
 }
@@ -118,31 +126,33 @@ bool BST_Is_Empty(const BST* const bst) {
  * POST: If a node with the the key value of node already exists in bst, nothing changes.
  * Otherwise, node is inserted into the BST struct pointed to by bst
  */
-bool BST_Insert(BST* const bst, BSTNode* const node) {
+bool BST_Insert(BST* const bst, BSTNode* pNode, 
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB) ) {
 
 	assert(bst != NULL);
-	assert(node != NULL);
+	assert(pNode != NULL);
 
-        return Insert(&(bst->root), node);
+        return Insert(&(bst->root), pNode, compare);
 }
 
 /* Recursive insert function*/
-static bool Insert(BSTNode** root, BSTNode* node) {
+static bool Insert(BSTNode** root, BSTNode* pNode, 
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 	
 	/* insert here */
 	if (*root == NULL) {
-		*root = node;
+		*root = pNode;
 		return true;
 	}
 
 	/* insert in the left sub-tree */
-	else if (node->key < (*root)->key) {
-	       return Insert(&((*root)->left), node);
+	else if (compare(pNode, *root) < 0) {
+	       return Insert(&((*root)->left), pNode, compare);
 	}
 
 	/* insert in the right sub-tree */
-	else if (node->key > (*root)->key) {
-		return Insert(&((*root)->right), node);
+	else if (compare(pNode, *root) > 0) {
+		return Insert(&((*root)->right), pNode, compare);
 	}
 
 	else {
@@ -162,15 +172,17 @@ static bool Insert(BSTNode** root, BSTNode* node) {
  * POST: If a node with the the key value of node does not exist in bst, nothing changes.
  * Otherwise, node is deleted from the BST struct pointed to by bst
  */
-BSTNode* BST_Remove(BST* const bst, int key) {
+ BSTNode* BST_Remove(BST* bst, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	assert(bst != NULL);
+	assert(pKeyNode != NULL);
         
-        BSTNode* temp = BST_Find(bst, key);
+    BSTNode* temp = BST_Find(bst, pKeyNode, compare);
 
-        if (temp != NULL) {
-            bst->root = Remove(&(bst->root), key);
-        }
+    if (temp != NULL) {
+        bst->root = Remove(&(bst->root), pKeyNode, compare);
+    }
 
 	return temp;
 }
@@ -180,7 +192,8 @@ BSTNode* BST_Remove(BST* const bst, int key) {
  * When removing a node with two children, the replacement node is the largest
  * node in the parent's left subtree.
  */
-static BSTNode* Remove(BSTNode** root, int key) {
+static BSTNode* Remove(BSTNode** root, const BSTNode* const pKeyNode, 
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
         
         /* The node to delete does not exist in the tree */
         if (*root == NULL) {
@@ -188,13 +201,15 @@ static BSTNode* Remove(BSTNode** root, int key) {
         }
 
         /* The node to delete is in the left subtree */
-        else if (key < (*root)->key) {
-                (*root)->left = Remove(&((*root)->left), key);
+        else if (compare(pKeyNode, *root) < 0) {
+
+                (*root)->left = Remove(&((*root)->left), pKeyNode, compare);
         }
 
         /* The node to delete is in the right subtree */
-        else if (key > (*root)->key) {
-                (*root)->right = Remove(&((*root)->right), key);
+        else if (compare(pKeyNode, *root) > 0) {
+
+                (*root)->right = Remove(&((*root)->right), pKeyNode, compare);
         }
 
         /* The node to delete is here */
@@ -213,7 +228,9 @@ static BSTNode* Remove(BSTNode** root, int key) {
                 /* Root has two children, so we must find a replacement */
                 else {
                         BSTNode* temp = GetMax((*root)->left);
-                        (*root)->left = Remove(&((*root)->left), temp->key);
+
+                        //(*root)->left = Remove(&((*root)->left), temp->key);
+                        (*root)->left = Remove(&((*root)->left), temp, compare);
 
                         temp->left = (*root)->left;
                         temp->right = (*root)->right;
@@ -252,46 +269,49 @@ void BST_Clear(BST* const bst) {
 
 
 /* 
- * Returns a pointer to the BSTNode in bst that has a Key member equal to key
+ * Returns a pointer to the BSTNode in bst that has a Key member equal to pKeyNode's key member
  * if it exists in bst, otherwise returns NULL
  * 
  * PRE: bst points to a properly initialized BST struct
  * 
  * POST: N/A
  */
-BSTNode* BST_Find(const BST* const bst, int key) {
+BSTNode* BST_Find(const BST* const bst, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	assert(bst != NULL);
 
-	return Find(bst->root, key);
+	return Find(bst->root, pKeyNode, compare);
 }
 
 
 /* 
  * Recursive find function for searching a BST struct for a node with 
- * a key member equal to 'key'
+ * a key member equal to the key of 'pKeyNode'
  */
-static BSTNode* Find(BSTNode* node, int key) {
+static BSTNode* Find(BSTNode* pNode, const BSTNode* const pKeyNode,
+	int (*compare)(const BSTNode* const pNodeA, const BSTNode* const pNodeB)) {
 
 	/* the key is not in the BST */
-	if (node == NULL) {
+	if (pNode == NULL) {
 		return NULL;
 	}
 
 	/* the key is to the left */
-	else if (key < node->key) {
-		return Find(BSTNode_Left(node), key);
+	else if (compare(pKeyNode, pNode) < 0) {
+
+		return Find(BSTNode_Left(pNode), pKeyNode, compare);
 	}
 
 	/* the key is to the right */
-	else if (key > node->key) {
-		return Find(BSTNode_Right(node), key);
+	else if (compare(pKeyNode, pNode) > 0) {
+		return Find(BSTNode_Right(pNode), pKeyNode, compare);
 	}
 
 	/* the key at this node */
 	else {
 
-		return node;
+		return pNode;
 	}
 } 
 
